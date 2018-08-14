@@ -29,7 +29,8 @@ leaf =
 leafContent :: Parser String
 leafContent =
   between (char '\"') (char '\"') (
-    many $ charOrEscape "\"" "\""
+    do char '\n'
+       many $ charOrEscape "\"" "\""
     )
 
 charOrEscape            :: String -> String -> Parser Char
