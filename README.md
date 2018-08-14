@@ -44,10 +44,37 @@ A program for creating file-system trees from template files.
 
 ## Usage
 ```
-hurl new $TEMPLATE_NAME $PROJECT_DIRECTORY
+hurl new $TEMPLATE_NAME $INSTANCE_DIRECTORY
 ```
-Your templates are stored in your `~/.hurl/` and have the `.hurl` file extension.
-Your templates name is it's filename **without the file extension**.
+
+## Templates
+A template contains a many file-system trees which are either leaves (`leaf`, file)
+or nodes (`node`, directory). You define a `leaf` by using the `leaf` keyword
+followed by the `leaf`s name (in single quotes), then an equals sign and some
+double-quoted text (the `leaf`s content). For example:
+```
+leaf 'example.txt' = "
+This is an example.
+"
+```
+You define a `node` by using the `node` keyword followed by it's name (in single quotes),
+then an equals sign and a list of `leaf`s separated by white-spaces and enclosed in `[` and `]`.
+For example:
+```
+node 'example.d' = [
+leaf 'example.txt' = "
+This is an example.
+"
+leaf 'example2.txt' = "
+This is another example.
+"
+]
+```
+Please note that the `node`s `leaf`'s paths are prefixed with the `node`s name;
+`node`s have scope. There is a root `node` that is specified on the commandline.
+Your templates are stored in your `~/.hurl/` (`%HOME%\.hurl\`, on `Windows`) and
+have the `.hurl` file extension. Your templates name is it's filename **without
+the file extension**.
 
 ## License
 ```
