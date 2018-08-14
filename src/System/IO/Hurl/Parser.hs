@@ -29,11 +29,12 @@ leaf =
 leafContent :: Parser String
 leafContent =
   between (char '\"') (char '\"') (
-    many leafContentHelper
+    many $ charOrEscape "\"" "\""
     )
 
-leafContentHelper :: Parser Char
-leafContentHelper = (char '\\' >> char '\"') <|> noneOf "\"" 
+charOrEscape            :: String -> String -> Parser Char
+charOrEscape []     den = noneOf den
+charOrEscape (e:es) den = (char '\\' >> char e) <|> charOrEscape es den
 
 node :: Parser FileTree
 node =
