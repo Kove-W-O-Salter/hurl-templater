@@ -23,7 +23,7 @@ readTemplate t =
      readFile tp
 
 new       :: [String] -> IO ()
-new [x,y] = readTemplate x >>= runHurl y
+new [x,y] = do t <- readTemplate x; createDirectory y; runHurl y t
 new _     = putStrLn "error: new: insufficient arguments."
 
 actionTable :: [(String, ([String] -> IO ()))]

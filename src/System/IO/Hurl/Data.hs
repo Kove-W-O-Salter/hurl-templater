@@ -27,8 +27,14 @@ runFileTrees root = mapM_ (evalFileTree root)
 -- Evaluate a file tree.
 --
 evalFileTree                 :: FilePath -> FileTree -> IO ()
-evalFileTree _    (Leaf n c) = writeFile n c
+evalFileTree root (Leaf n c) = writeFile (addPath root n) c
 evalFileTree root (Node n c) =
-  do let newRoot = root ++ "/" ++ n
+  do let newRoot = addPath root n
      createDirectory newRoot
      runFileTrees newRoot c
+
+--
+-- Separate the first path and the second path by a slash.
+--
+addPath     :: FilePath -> FilePath -> FilePath
+addPath x y = x ++ "/" ++ y
