@@ -3,6 +3,7 @@ module System.IO.Hurl.Parser (
   parse,
   hurl) where
 
+import Control.Monad
 import System.IO.Hurl.Data
 import Text.ParserCombinators.Parsec
 
@@ -28,8 +29,11 @@ leaf =
 leafContent :: Parser String
 leafContent =
   between (char '\"') (char '\"') (
-    many $ noneOf "\""
+    many leafContentHelper
     )
+
+leafContentHelper :: Parser Char
+leafContentHelper = (char '\\' >> char '\"') <|> noneOf "\"" 
 
 node :: Parser FileTree
 node =
@@ -55,3 +59,6 @@ name =
   between (char '\'') (char '\'') (
     many $ noneOf "\'"
     )
+
+escapedQuote :: Parser String
+escapedQuote = string "\\\""
