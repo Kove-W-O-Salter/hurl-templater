@@ -1,5 +1,7 @@
 
-module System.IO.Hurl.Parser () where
+module System.IO.Hurl.Parser (
+  parse,
+  hurl) where
 
 import System.IO.Hurl.Data
 import Text.ParserCombinators.Parsec
@@ -42,7 +44,7 @@ node =
      spaces
      return $ Node n c
 
-nodeContent :: Parser FileTree
+nodeContent :: Parser [FileTree]
 nodeContent =
   between (char '[') (char ']') (
     many fileTree
@@ -50,6 +52,6 @@ nodeContent =
 
 name ::  Parser String
 name =
-  between (char "\'") (char "\'") (
+  between (char '\'') (char '\'') (
     many anyChar
     )

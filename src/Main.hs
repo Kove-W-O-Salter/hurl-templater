@@ -1,6 +1,7 @@
 module Main where
 
 import System.IO.Hurl
+import System.Directory
 import System.Environment
 
 templateDir :: IO FilePath

@@ -8,4 +8,4 @@ runHurl             :: FilePath -> String -> IO ()
 runHurl root source =
   case parse hurl "Hurl" source of
     Left  err -> print err
-    Right fts -> run fts
+    Right fts -> runFileTrees root fts
