@@ -1,5 +1,10 @@
 language: haskell
 
-install: sudo apt-get install haskell-platform
+install:
+- sudo apt-get install haskell-platform
+- git clone https://github.com/haskell/parsec
+- cd parsec
+- cabal configure && cabal build && cabal install
+- cd ../
 
 script: cabal configure && cabal build && cabal install && cabal clean 
