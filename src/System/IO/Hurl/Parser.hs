@@ -28,7 +28,7 @@ leaf =
 leafContent :: Parser String
 leafContent =
   between (char '\"') (char '\"') (
-    many anyChar
+    many $ noneOf "\""
     )
 
 node :: Parser FileTree
@@ -53,5 +53,5 @@ nodeContent =
 name ::  Parser String
 name =
   between (char '\'') (char '\'') (
-    many anyChar
+    many $ noneOf "\'"
     )
