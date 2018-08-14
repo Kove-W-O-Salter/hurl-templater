@@ -1,0 +1,3 @@
+language: haskell
+install: sudo apt-get install haskell-platform
+script: cabal configure && cabal build && cabal install
