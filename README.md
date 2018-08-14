@@ -33,14 +33,14 @@ A program for creating file-system trees from template files.
   ```
 * On `Windows` open up a `Terminal` and run:
   ```bash
-  cd %HOME%Downloads/ && git clone https://github.com/Kove-W-O-Salter/hurl-templater ^
-                      && cd hurl-templater                                           ^
-                      && cabal configure                                             ^
-                      && cabal build                                                 ^
-                      && cabal install                                               ^
-                      && cabal clean
+  cd %HOME%\Downloads\ && git clone https://github.com/Kove-W-O-Salter/hurl-templater ^
+                       && cd hurl-templater                                           ^
+                       && cabal configure                                             ^
+                       && cabal build                                                 ^
+                       && cabal install                                               ^
+                       && cabal clean
   ```
-> NOTE: I don't know if it works on `Windows`. `Windows` users, please report any problems in an issue.
+> NOTE: `Windows` isn't supported yet. I'm working on it. If you'd like to help just send a `pr`.
 
 ## Usage
 ```
@@ -48,33 +48,37 @@ hurl new $TEMPLATE_NAME $INSTANCE_DIRECTORY
 ```
 
 ## Templates
-A template contains a many file-system trees which are either leaves (`leaf`, file)
-or nodes (`node`, directory). You define a `leaf` by using the `leaf` keyword
-followed by the `leaf`s name (in single quotes), then an equals sign and some
-double-quoted text (the `leaf`s content). For example:
-```
-leaf 'example.txt' = "
-This is an example.
-"
-```
-You define a `node` by using the `node` keyword followed by it's name (in single quotes),
-then an equals sign and a list of `leaf`s separated by white-spaces and enclosed in `[` and `]`.
-For example:
-```
-node 'example.d' = [
-leaf 'example.txt' = "
-This is an example.
-"
-leaf 'example2.txt' = "
-This is another example.
-"
-]
-```
-Please note that the `node`s `leaf`'s paths are prefixed with the `node`s name;
-`node`s have scope. There is a root `node` that is specified on the commandline.
-Your templates are stored in your `~/.hurl/` (`%HOME%\.hurl\`, on `Windows`) and
-have the `.hurl` file extension. Your templates name is it's filename **without
-the file extension**.
+A template is a file, stored in a special directory (`~/.hurl` on `POSIX` and
+`%HOME%\.hurl` on `Windows`), that has the `.hurl` file extension. Templates
+are used to specify directory skeletons containing:
+* `leaf`s: files which have default contents.
+* `node`s: which contain other `leaf`s and `node`s.
+These `leaf`s and `node`s are, generically, referred to as `tree`s.
+The syntax for defining a `tree` is very simple:
+* Lets start with an example: to define a file named `example.txt`, that contains the text
+  `this is an example`, we would write:
+  ```
+  leaf 'example.txt' = "
+  this is an example
+  "
+  ```
+  First we let `hurl` know that we are defining a `leaf` (with the `leaf` keyword), then specify the
+  name of the file (`example.txt`) and, finally, specify it's contents in double quotes.
+* Lets start with an example: to define a directory named `example.d`, that contains `example.txt`,
+  we would write:
+  ```
+  node 'example.d' = [
+
+  leaf 'example.txt' = "
+  this is an example
+  "
+
+  ]
+  ```
+  First we let `hurl` know that we are defining a `node` (with the `node` keyword), then specify the
+  name of the directory (`example.d`) and, finally, specify it's branches in square braces.
+> NOTE: when we specifying the template to use, on the command-line, please remember to
+>       omit the file-extension and to never specify a full path.
 
 ## License
 ```
