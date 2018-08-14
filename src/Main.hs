@@ -4,33 +4,6 @@ import System.IO.Hurl
 import System.Directory
 import System.Environment
 
-templateDir :: IO FilePath
-templateDir =
-  do h <- getHomeDirectory
-     return (h ++ "/.hurl")
-
-templateName   :: String -> FilePath
-templateName t = t ++ ".hurl"
-
-templatePath   :: String -> IO FilePath
-templatePath t =
-  do td <- templateDir
-     return (td ++ "/" ++ (templateName t))
-
-readTemplate   :: String -> IO String
-readTemplate t =
-  do tp <- templatePath t
-     readFile tp
-
-new       :: [String] -> IO ()
-new [x,y] = do t <- readTemplate x; createDirectory y; runHurl y t
-new _     = putStrLn "error: new: insufficient arguments."
-
-actionTable :: [(String, ([String] -> IO ()))]
-actionTable = [
-  ("new", new)
-  ]
-
 main :: IO ()
 main =
   do as <- getArgs
@@ -40,3 +13,30 @@ main =
          case lookup x actionTable of
            Nothing -> putStrLn "error: unknown action."
            Just  f -> f xs
+
+actionTable :: [(String, ([String] -> IO ()))]
+actionTable = [
+  ("new", new)
+  ]
+
+new       :: [String] -> IO ()
+new [x,y] = do t <- readTemplate x; createDirectory y; runHurl y t
+new _     = putStrLn "error: new: insufficient arguments."
+
+readTemplate   :: String -> IO String
+readTemplate t =
+  do tp <- templatePath t
+     readFile tp
+
+templatePath   :: String -> IO FilePath
+templatePath t =
+  do td <- templateDir
+     return (td ++ "/" ++ (templateName t))
+
+templateName   :: String -> FilePath
+templateName t = t ++ ".hurl"
+
+templateDir :: IO FilePath
+templateDir =
+  do h <- getHomeDirectory
+     return (h ++ "/.hurl")
