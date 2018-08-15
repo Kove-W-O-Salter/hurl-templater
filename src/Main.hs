@@ -1,6 +1,8 @@
 module Main where
 
+import Data.Maybe
 import System.IO.Hurl
+import System.Process
 import System.FilePath
 import System.Directory
 import System.Environment
@@ -25,7 +27,8 @@ main =
 --
 actionTable :: [(String, ([String] -> IO ()))]
 actionTable = [
-  ("new", new)
+  ("new",    new),
+  ("create", create)
   ]
 
 --
@@ -34,6 +37,22 @@ actionTable = [
 new       :: [String] -> IO ()
 new [x,y] = createDirectory y >> readTemplate x >>= runHurl y
 new _     = putStrLn "error: new: insufficient arguments."
+
+
+--
+-- Create a new template.
+--
+create :: [String] -> IO ()
+create [x] = do e <- getEnv' "EDITOR"; t <- templatePath x; callCommand (e ++ " " ++ t)
+create _   = putStrLn "error: create: insufficient arguments."
+
+--
+-- If var is in the environment return it's value, otherwise return [].
+--
+getEnv' :: String -> IO String
+getEnv' var =
+  do val <- lookupEnv var
+     return $ fromMaybe "" val
 
 --
 -- Read the contents of a template.

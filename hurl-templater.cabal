@@ -62,7 +62,7 @@ executable hurl-templater
   -- other-extensions:    
   
   -- Other library packages from which modules are imported.
-  build-depends:       base, directory, parsec, filepath
+  build-depends:       base, directory, parsec, filepath, process
   
   -- Directories containing source files.
   hs-source-dirs:      src
