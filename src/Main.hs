@@ -32,7 +32,7 @@ actionTable = [
 -- Create a new directory with the structure of a specified template.
 --
 new       :: [String] -> IO ()
-new [x,y] = do t <- readTemplate x; createDirectory y; runHurl y t
+new [x,y] = createDirectory y >> readTemplate x >>= runHurl y
 new _     = putStrLn "error: new: insufficient arguments."
 
 --
@@ -41,7 +41,12 @@ new _     = putStrLn "error: new: insufficient arguments."
 readTemplate   :: String -> IO String
 readTemplate t =
   do tp <- templatePath t
-     readFile tp
+     te <- doesFileExist tp
+     if te then
+      readFile tp
+     else
+      do putStrLn "error: readTemplate: template does not exist."
+         return []
 
 --
 -- Build the full path of a template.
