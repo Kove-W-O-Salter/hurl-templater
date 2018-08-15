@@ -30,7 +30,8 @@ actionTable :: [(String, ([String] -> IO ()))]
 actionTable = [
   ("new",    new),
   ("create", create),
-  ("info",   info)
+  ("info",   info),
+  ("list",   list)
   ]
 
 --
@@ -67,6 +68,17 @@ info (t:ts) =
      putStr $ unlines $ map ("  | "++) (lines tc)
      hFlush stdout
      info ts
+
+--
+-- Show all of the templates.
+--
+list :: [String] -> IO ()
+list [] =
+  do td <- templateDir
+     ts <- listDirectory td
+     mapM_ putStrLn (map dropExtension ts)
+
+list _ = putStrLn "error: list: insufficient arguments."
 
 --
 -- If var is in the environment return it's value, otherwise return std.
