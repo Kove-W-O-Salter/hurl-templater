@@ -6,12 +6,13 @@ import System.Directory
 import System.Environment
 
 --
--- Check wether the user passed an action in and, if so, 
+-- Check wether the user passed an action in and, if so,
 -- passing the renaming arguments to the action.
 --
 main :: IO ()
 main =
-  do as <- getArgs
+  do createTemplateDir
+     as <- getArgs
      case as of
        []     -> putStrLn "error: no arguments."
        (x:xs) ->
@@ -55,6 +56,15 @@ templatePath t =
 --
 templateName :: String -> FilePath
 templateName = (<.> "hurl")
+
+
+--
+-- Create the template directory if it does not already exist.
+--
+createTemplateDir :: IO ()
+createTemplateDir =
+  do td <- templateDir
+     createDirectoryIfMissing False td
 
 --
 -- The directory where templates are stored.
