@@ -11,7 +11,7 @@ A program for creating file-system trees from template files.
 | `Windows`       | `unknown`     | `unknown` |
 
 ## Dependencies
-### `Git`
+### Git
 * On `Ubuntu` (`18.04`) just open up a `Terminal` (`Ctrl-Alt-t`) and run:
   ```bash
   sudo apt-get install git
@@ -20,7 +20,7 @@ A program for creating file-system trees from template files.
 * On `Mac` read the `Installing on Mac` section of [installing git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
 * On `Windows` read the `Installing on Windows` section of [installing git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
 
-### `Haskell Platform`
+### Haskell Platform
 * On `Ubuntu` (`18.04`) just open up a `Terminal` (`Ctrl-Alt-t`) and run:
   ```bash
   sudo apt-get install haskell-platform
@@ -86,6 +86,7 @@ The syntax for defining a `tree` is very simple:
   ```
   First we let `hurl` know that we are defining a `node` (with the `node` keyword), then specify the
   name of the directory (`example.d`) and, finally, specify it's branches in square braces.
+  
 > NOTE: when we specifying the template to use, on the command-line, please remember to
 >       omit the file-extension and to never specify a full path.
 
