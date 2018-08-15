@@ -43,16 +43,23 @@ new _     = putStrLn "error: new: insufficient arguments."
 -- Create a new template.
 --
 create :: [String] -> IO ()
-create [x] = do e <- getEnv' "EDITOR" "nano"; t <- templatePath x; callCommand (e ++ " " ++ t)
+create [x] =
+  do e <- getEnv' "EDITOR"
+     if not (null e) then
+       do t <- templatePath x
+          callCommand (e ++ " " ++ t)
+     else
+       putStrLn "error: create: $EDITOR is empty."
+
 create _   = putStrLn "error: create: insufficient arguments."
 
 --
 -- If var is in the environment return it's value, otherwise return std.
 --
-getEnv'         :: String -> String -> IO String
-getEnv' var std =
+getEnv'     :: String -> IO String
+getEnv' var =
   do val <- lookupEnv var
-     return $ fromMaybe std val
+     return $ fromMaybe [] val
 
 --
 -- Read the contents of a template.
