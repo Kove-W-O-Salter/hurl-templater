@@ -2,6 +2,14 @@
 ## Description
 A program for creating file-system trees from template files.
 
+## Build Status
+| `OS`            | Version       | Status    |
+|-----------------|---------------|-----------|
+| `Ubuntu`        | `18.04.1 LTS` | `passing` |
+| `Generic Linux` | `unknown`     | `unknown` |
+| `Mac`           | `unknown`     | `unknown` |
+| `Windows`       | `unknown`     | `unknown` |
+
 ## Dependencies
 ### `Git`
 * On `Ubuntu` (`18.04`) just open up a `Terminal` (`Ctrl-Alt-t`) and run:
