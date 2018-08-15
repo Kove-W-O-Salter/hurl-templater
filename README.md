@@ -40,7 +40,8 @@ A program for creating file-system trees from template files.
                        && cabal install                                               ^
                        && cabal clean
   ```
-> NOTE: `Windows` isn't supported yet. I'm working on it. If you'd like to help just send a `pr`.
+> NOTE: Neither `Windows` or `Mac` have been tested. If you use `Mac`
+>       or `Windows` please submit your build results in an issue.
 
 ## Usage
 ```
