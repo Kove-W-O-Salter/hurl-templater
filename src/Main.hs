@@ -1,6 +1,7 @@
 module Main where
 
 import System.IO.Hurl
+import System.FilePath
 import System.Directory
 import System.Environment
 
@@ -47,13 +48,13 @@ readTemplate t =
 templatePath   :: String -> IO FilePath
 templatePath t =
   do td <- templateDir
-     return (td ++ "/" ++ (templateName t))
+     return $ joinPath [td, templateName t]
 
 --
 -- Attach the file extension to the templates name.
 --
-templateName   :: String -> FilePath
-templateName t = t ++ ".hurl"
+templateName :: String -> FilePath
+templateName = (<.> "hurl")
 
 --
 -- The directory where templates are stored.
@@ -61,4 +62,4 @@ templateName t = t ++ ".hurl"
 templateDir :: IO FilePath
 templateDir =
   do h <- getHomeDirectory
-     return (h ++ "/.hurl")
+     return (joinPath [h, ".hurl"])

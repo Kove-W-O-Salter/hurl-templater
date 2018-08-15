@@ -11,6 +11,14 @@ module System.IO.Hurl.Data (
 import System.Directory
 
 --
+-- For generic file-system path methods.
+--
+import System.FilePath (
+  pathSeparator,
+  joinPath
+  )
+
+--
 -- The file tree.
 --
 data FileTree = Leaf FilePath String
@@ -27,14 +35,8 @@ runFileTrees root = mapM_ (evalFileTree root)
 -- Evaluate a file tree.
 --
 evalFileTree                 :: FilePath -> FileTree -> IO ()
-evalFileTree root (Leaf n c) = writeFile (addPath root n) c
+evalFileTree root (Leaf n c) = writeFile (joinPath [root, n]) c
 evalFileTree root (Node n c) =
-  do let newRoot = addPath root n
+  do let newRoot = joinPath [root,n]
      createDirectory newRoot
      runFileTrees newRoot c
-
---
--- Separate the first path and the second path by a slash.
---
-addPath     :: FilePath -> FilePath -> FilePath
-addPath x y = x ++ "/" ++ y
