@@ -1,5 +1,6 @@
 module Main where
 
+import System.IO
 import Data.Maybe
 import System.IO.Hurl
 import System.Process
@@ -28,7 +29,8 @@ main =
 actionTable :: [(String, ([String] -> IO ()))]
 actionTable = [
   ("new",    new),
-  ("create", create)
+  ("create", create),
+  ("info",   info)
   ]
 
 --
@@ -52,6 +54,19 @@ create [x] =
        putStrLn "error: create: $EDITOR is empty."
 
 create _   = putStrLn "error: create: insufficient arguments."
+
+--
+-- Show the contents of a template.
+--
+info        :: [String] -> IO ()
+info []     = return ()
+info (t:ts) =
+  do tc <- readTemplate t
+     tp <- templatePath t
+     putStrLn ("+ " ++ tp)
+     putStr $ unlines $ map ("  | "++) (lines tc)
+     hFlush stdout
+     info ts
 
 --
 -- If var is in the environment return it's value, otherwise return std.
