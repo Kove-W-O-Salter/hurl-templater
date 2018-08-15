@@ -54,6 +54,7 @@ A program for creating file-system trees from template files.
 ## Usage
 ```
 hurl new $TEMPLATE_NAME $INSTANCE_DIRECTORY
+hurl create $NEW_TEMPLATE_NAME
 ```
 
 ## Templates
