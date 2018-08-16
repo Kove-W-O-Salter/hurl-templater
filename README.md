@@ -53,10 +53,10 @@ A program for creating file-system trees from template files.
 
 ## Usage
 ```
-hurl new $TEMPLATE_NAME $INSTANCE_DIRECTORY
-hurl create $NEW_TEMPLATE_NAME
-hurl info [{$TEMPLATE_NAME}]
-hurl list
+hurl-templater new $TEMPLATE_NAME $INSTANCE_DIRECTORY
+hurl-templater create $NEW_TEMPLATE_NAME
+hurl-templater info [{$TEMPLATE_NAME}]
+hurl-templater list
 ```
 
 ## Templates
